@@ -16,5 +16,14 @@ module.exports = {
     new HtmlWebpackPlugin({
       title: 'Webpack app'
     })
-  ]
+  ],
+  module: {
+    rules: [{
+      test: /\.pug$/,
+      loader: 'pug-loader',
+      options: {
+        pretty: true
+      }
+    }]
+  }
 };
