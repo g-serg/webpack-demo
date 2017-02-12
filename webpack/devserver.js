@@ -2,7 +2,7 @@ module.exports = function() {
   return {
     devServer: {
       stats: 'errors-only',
-      port: 80
-    }
+      port: 80,
+    },
   };
 };

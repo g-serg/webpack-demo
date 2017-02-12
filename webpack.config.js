@@ -8,49 +8,53 @@ const sass = require('./webpack/sass');
 const extractCSS = require('./webpack/css.extract');
 const css = require('./webpack/css');
 const uglifyJS = require('./webpack/js.uglyfy.js');
+const lintJS = require('./webpack/js.lint');
+const lintCSS = require('./webpack/sass.lint');
+const images = require('./webpack/images');
+const favicon = require('./webpack/favicon');
 
 const PATHS = {
   source: path.join(__dirname, 'source'),
-  build: path.join(__dirname, 'build')
+  build: path.join(__dirname, 'build'),
 };
 
-const common = merge([{
+const common = merge([
+  {
     entry: {
       'index': PATHS.source + '/pages/index/index.js',
-      'blog': PATHS.source + '/pages/blog/blog.js'
+      'blog': PATHS.source + '/pages/blog/blog.js',
     },
     output: {
       path: PATHS.build,
-      filename: './js/[name].js'
+      filename: './js/[name].js',
     },
     plugins: [
-      new HtmlWebpackPlugin({
+        new HtmlWebpackPlugin({
         filename: 'index.html',
         chunks: ['index', 'common'],
-        template: PATHS.source + '/pages/index/index.pug'
+        template: PATHS.source + '/pages/index/index.pug',
       }),
-      new HtmlWebpackPlugin({
+        new HtmlWebpackPlugin({
         filename: 'blog.html',
         chunks: ['blog', 'common'],
-        template: PATHS.source + '/pages/blog/blog.pug'
+        template: PATHS.source + '/pages/blog/blog.pug',
       }),
-      new webpack.optimize.CommonsChunkPlugin({
+        new webpack.optimize.CommonsChunkPlugin({
         name: 'common',
       }),
-      new webpack.ProvidePlugin({
+        new webpack.ProvidePlugin({
         $: 'jquery',
-        jQuery: 'jquery'
-      })
-    ]
-  },
-  pug()
+        jQuery: 'jquery',
+      }),
+      ],
+    },
+    pug(),
+    lintJS({
+    paths: PATHS.sources,
+  }),
+  lintCSS(),
+  images(),
 ]);
-
-const developmentConfig = {
-  devServer: {
-    stats: 'errors-only'
-  }
-};
 
 module.exports = function(env) {
   if (env === 'production') {
@@ -58,8 +62,9 @@ module.exports = function(env) {
       common,
       extractCSS(),
       uglifyJS({
-        useSourceMap: true
-      })
+        useSourceMap: true,
+      }),
+      favicon(),
     ]);
   }
   if (env === 'development') {
@@ -67,7 +72,7 @@ module.exports = function(env) {
       common,
       devserver(),
       sass(),
-      css()
+      css(),
     ]);
   }
 };

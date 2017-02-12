@@ -6,9 +6,9 @@ module.exports = function(paths) {
         include: paths,
         use: [
           'style-loader',
-          'css-loader'
-        ]
-      }]
-    }
+          'css-loader',
+        ],
+      }],
+    },
   };
 };
