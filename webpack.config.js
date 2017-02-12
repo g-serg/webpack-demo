@@ -29,20 +29,20 @@ const common = merge([
       filename: './js/[name].js',
     },
     plugins: [
-        new HtmlWebpackPlugin({
+      new HtmlWebpackPlugin({
         filename: 'index.html',
         chunks: ['index', 'common'],
         template: PATHS.source + '/pages/index/index.pug',
       }),
-        new HtmlWebpackPlugin({
+      new HtmlWebpackPlugin({
         filename: 'blog.html',
         chunks: ['blog', 'common'],
         template: PATHS.source + '/pages/blog/blog.pug',
       }),
-        new webpack.optimize.CommonsChunkPlugin({
+      new webpack.optimize.CommonsChunkPlugin({
         name: 'common',
       }),
-        new webpack.ProvidePlugin({
+      new webpack.ProvidePlugin({
         $: 'jquery',
         jQuery: 'jquery',
       }),
