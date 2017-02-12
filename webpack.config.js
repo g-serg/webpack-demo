@@ -46,10 +46,10 @@ const common = merge([
         $: 'jquery',
         jQuery: 'jquery',
       }),
-      ],
-    },
-    pug(),
-    lintJS({
+    ],
+  },
+  pug(),
+  lintJS({
     paths: PATHS.sources,
   }),
   lintCSS(),
